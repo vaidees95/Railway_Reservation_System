@@ -1,0 +1,47 @@
+<html>
+<body>
+<?php
+if(count($_POST)>0) {
+$conn = mysqli_connect("localhost","root","","railway");
+if (!$conn)
+           {
+             die('Could not connect: ' . mysql_error());
+           }
+$result=mysqli_query($conn,"SELECT * FROM trainlist WHERE fstation='" . $_POST['fplace'] . "' and tstation='" . $_POST['tplace'] . "' and date='" . $_POST['date'] . "'");
+$row=mysqli_fetch_array($result);
+$tnum=$row['trainnumber'];
+$tname=$row['trainname'];
+$count=$row['available'];
+$cost=$row['cost'];
+$date=$row['date'];
+?>
+<center>
+<table border=1px>
+<thead>
+<td><b>Train Name</b></td>
+<td><b>Train Number</b></td>
+<td><b>Availability</b></td>
+<td><b>Cost</b></td>
+<form action="ticketbook.php" method="post">
+<tr>
+<td>
+<input type="radio" name="t1name" value='$tname'>
+<?php echo $tname; ?>
+</td>
+<td>
+<?php echo $tnum; ?>
+<td>
+'$count'
+</td>
+<td>
+<?php echo $cost; ?>
+</td>
+</tr>
+<input type=hidden name=tname value='$tname'>
+</table>
+<br/><br/>
+<input type=submit name=submit value=submit>
+</form>
+</center> 
+</body>
+</html>
